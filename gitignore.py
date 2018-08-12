@@ -38,9 +38,11 @@ class Loader():
             # Dealing with .sublime-package file
             package = zipfile.ZipFile(self._package_path, 'r')
             path = self._bp_folder + '/'
-            return [f for f in package.namelist() if f.startswith(path)]
+            return [file for file in package.namelist() if file.startswith(path) and file.endswith('.gitignore')]
         else:
-            return os.listdir(os.path.join(self._package_path, self._bp_folder))
+            path = os.path.join(self._package_path, self._bp_folder)
+            return [os.path.join(step[0][len(path) + 1:], file)
+                    for step in os.walk(path) for file in step[2] if file.endswith('.gitignore')]
 
     def _load_file(self, path):
         if self._is_zipfile:
@@ -48,21 +50,20 @@ class Loader():
             package = zipfile.ZipFile(self._package_path, 'r')
             with package.open(path, 'r') as f:
                 text = f.read()
-            return text
         else:
             file_path = os.path.join(self._package_path, path)
             with open(file_path, 'r') as f:
                 text = f.read()
-            return text
+        return text
 
     def _build_list(self):
         for bp_file in self._list_dir():
-            self._address[bp_file.replace('.gitignore', '')] = bp_file
+            self._address[bp_file[bp_file.rfind('/') + 1:].replace('.gitignore', '')] = bp_file
         self._bp_list = list(self._address.keys())
         self._bp_list.sort()
 
     def get_list(self):
-        return self._bp_list[:]  # Copy _bp_list
+        return self._bp_list.copy()
 
     def load_bp(self, bp):
         return self._load_file(self._bp_folder + '/' + self._address[bp])
