@@ -10,6 +10,13 @@ Then select the desired gitignore boilerplate.
 Now select another boilerplate. When you are done, select `Done`.
 Save the newly open file as `.gitignore` and your done!
 
+## User-defined Boilerplates
+
+You can add your own `*.gitignore` files to `Packages/User/gitignores` directory to use them via Gitignore Plug-in.
+You may need to restart sublime text to load new boilerplates.
+
+User-defined boilerplates override default ones with the same name.
+
 ## Installation
 
 ### Install via Package Control
