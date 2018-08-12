@@ -27,7 +27,7 @@ class RungiboCommand(sublime_plugin.WindowCommand):
         package_path = self._find_path()
         if zipfile.is_zipfile(package_path):
             # Dealing with .sublime-package file
-            package = zipfile.ZipFile(package_path, "r")
+            package = zipfile.ZipFile(package_path, 'r')
             path = self._bp_folder + '/'
             return [f.replace(path, '') for f in package.namelist() if f.startswith(path)]
         else:
@@ -89,7 +89,7 @@ class RungiboCommand(sublime_plugin.WindowCommand):
         final = ''
 
         for bp in self.chosen_array:
-            text = self._loadfile(bp + ".gitignore")
+            text = self._loadfile(bp + '.gitignore')
             final = final + '###' + bp + '###\n\n' + text + '\n\n'
 
         final = final.strip()
