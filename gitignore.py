@@ -52,7 +52,9 @@ class RungiboCommand(sublime_plugin.WindowCommand):
 
     def build_list(self):
         if not self._bp_list:
-            for bp_file in self._listdir():
+            bp_files = self._listdir()
+            bp_files.sort()
+            for bp_file in bp_files:
                 self._bp_list.append(bp_file.replace('.gitignore', ''))
 
         self.chosen_array = []
