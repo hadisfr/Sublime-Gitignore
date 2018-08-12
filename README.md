@@ -17,6 +17,8 @@ You may need to restart sublime text to load new boilerplates.
 
 User-defined boilerplates override default ones with the same name.
 
+You can find some old gitignore boilerplates at [hadisfr/old-gitignores](https://github.com/hadisfr/old-gitignores).
+
 ## Installation
 
 ### Install via Package Control

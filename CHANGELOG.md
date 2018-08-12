@@ -30,3 +30,5 @@ Start to work on `begin_edit` restriction on ST3
     * [VB.Net.gitignore](VB.Net.gitignore) has been consolidate into [VisualStudio.gitignore](boilerplates/VisualStudio.gitignore) by [github/gitignore#492](https://github.com/github/gitignore/pull/492)
     * [vim.gitignore](boilerplates/vim.gitignore) has been renamed to [Vim.gitignore](boilerplates/Global/Vim.gitignore)
     * [webMethods.gitignore](boilerplates/webMethods.gitignore) has been removed. I couldn't find any thing related to it's deletion.
+
+    Some of those deleted files are available at [hadisfr/old-gitignores](https://github.com/hadisfr/old-gitignores).
