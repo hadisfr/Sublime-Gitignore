@@ -91,6 +91,7 @@ class RungiboCommand(sublime_plugin.WindowCommand):
             final = final + '###' + bp + '###\n\n' + text + '\n\n'
 
         final = final.strip()
+        final += '\n'
         view = sublime.active_window().new_file()
         view.run_command('writegibo', {'bp': final})
 
