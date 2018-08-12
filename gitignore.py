@@ -40,13 +40,13 @@ class rungiboCommand(sublime_plugin.WindowCommand):
             package = zipfile.ZipFile(package_path, 'r')
             path = self._bp_folder + '/' + bp
             f = package.open(path, 'r')
-            text = f.read().decode()
+            text = f.read()
             f.close()
             return text
         else:
             file_path = os.path.join(package_path, self._bp_folder, bp)
             f = open(file_path, 'r')
-            text = f.read().decode()
+            text = f.read()
             f.close()
             return text
 
