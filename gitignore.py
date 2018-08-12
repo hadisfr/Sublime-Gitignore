@@ -4,93 +4,98 @@ import zipfile
 import sublime
 import sublime_plugin
 
+loader = None
 
-class RungiboCommand(sublime_plugin.WindowCommand):
 
+def plugin_loaded():
+    global loader
+    loader = Loader()
+
+
+class Loader():
     _bp_list = []
     _bp_folder = 'boilerplates'
     _package_path = None
+    _is_zipfile = False
+    _address = {}
+
+    def __init__(self):
+        self._find_path()
+        self._is_zipfile = zipfile.is_zipfile(self._package_path)
+        self._build_list()
 
     def _find_path(self):
-        if not self._package_path:
-            paths = [os.path.join(sublime.installed_packages_path(), 'Gitignore.sublime-package'),
-                     os.path.join(sublime.packages_path(), 'Gitignore'),
-                     os.path.join(sublime.packages_path(), 'Sublime-Gitignore')]
-            for path in paths:
-                if os.path.exists(path):
-                    self._package_path = path
-                    break
+        paths = [os.path.join(sublime.installed_packages_path(), 'Gitignore.sublime-package'),
+                 os.path.join(sublime.packages_path(), 'Gitignore'),
+                 os.path.join(sublime.packages_path(), 'Sublime-Gitignore')]
+        for path in paths:
+            if os.path.exists(path):
+                self._package_path = path
+                break
 
-        return self._package_path
-
-    def _listdir(self):
-        package_path = self._find_path()
-        if zipfile.is_zipfile(package_path):
+    def _list_dir(self):
+        if self._is_zipfile:
             # Dealing with .sublime-package file
-            package = zipfile.ZipFile(package_path, 'r')
+            package = zipfile.ZipFile(self._package_path, 'r')
             path = self._bp_folder + '/'
-            return [f.replace(path, '') for f in package.namelist() if f.startswith(path)]
+            return [f for f in package.namelist() if f.startswith(path)]
         else:
-            return os.listdir(os.path.join(package_path, self._bp_folder))
+            return os.listdir(os.path.join(self._package_path, self._bp_folder))
 
-    def _loadfile(self, bp):
-        package_path = self._find_path()
-        if zipfile.is_zipfile(package_path):
+    def _load_file(self, path):
+        if self._is_zipfile:
             # Dealing with .sublime-package file
-            package = zipfile.ZipFile(package_path, 'r')
-            path = self._bp_folder + '/' + bp
-            f = package.open(path, 'r')
-            text = f.read()
-            f.close()
+            package = zipfile.ZipFile(self._package_path, 'r')
+            with package.open(path, 'r') as f:
+                text = f.read()
             return text
         else:
-            file_path = os.path.join(package_path, self._bp_folder, bp)
-            f = open(file_path, 'r')
-            text = f.read()
-            f.close()
+            file_path = os.path.join(self._package_path, path)
+            with open(file_path, 'r') as f:
+                text = f.read()
             return text
 
-    def build_list(self):
-        if not self._bp_list:
-            bp_files = self._listdir()
-            bp_files.sort()
-            for bp_file in bp_files:
-                self._bp_list.append(bp_file.replace('.gitignore', ''))
+    def _build_list(self):
+        for bp_file in self._list_dir():
+            self._address[bp_file.replace('.gitignore', '')] = bp_file
+        self._bp_list = list(self._address.keys())
+        self._bp_list.sort()
 
-        self.chosen_array = []
-        self.first_list = self._bp_list[:]  # Copy _bp_list
-        self.second_list = ['Done'] + self._bp_list
+    def get_list(self):
+        return self._bp_list[:]  # Copy _bp_list
 
+    def load_bp(self, bp):
+        return self._load_file(self._bp_folder + '/' + self._address[bp])
+
+
+class RungiboCommand(sublime_plugin.WindowCommand):
     def show_quick_panel(self, options, done):
-        # Fix from
-        # http://www.sublimetext.com/forum/viewtopic.php?f=6&t=10999
+        # Fix from http://www.sublimetext.com/forum/viewtopic.php?f=6&t=10999
         sublime.set_timeout(lambda: self.window.show_quick_panel(options, done), 10)
 
     def run(self):
-        self.build_list()
-        self.show_quick_panel(self.first_list, self.first_select)
+        self.chosen_array = []
+        self.bp_list = loader.get_list()
+        self.is_first = True
+        self.show_quick_panel(self.bp_list, self.on_select)
 
-    def first_select(self, index):
-        if index > -1:
-            self.chosen_array.append(self.first_list[index])
-            self.second_list.remove(self.first_list[index])
-            self.show_quick_panel(self.second_list, self.second_select)
-
-    def second_select(self, index):
-        if index == 0:
+    def on_select(self, index):
+        if not self.is_first and index == 0:
             self.write_file()
-            self.build_list()
-        elif index > 0:
-            self.chosen_array.append(self.second_list[index])
-            self.second_list.remove(self.second_list[index])
-            self.show_quick_panel(self.second_list, self.second_select)
+        elif index >= 0:
+            self.chosen_array.append(self.bp_list[index])
+            self.bp_list.remove(self.bp_list[index])
+            if self.is_first:
+                self.bp_list.insert(0, 'Done')
+                self.is_first = False
+            self.show_quick_panel(self.bp_list, self.on_select)
 
     def write_file(self):
         final = ''
 
         for bp in self.chosen_array:
-            text = self._loadfile(bp + '.gitignore')
-            final = final + '###' + bp + '###\n\n' + text + '\n\n'
+            text = loader.load_bp(bp)
+            final = final + '### ' + bp + ' ###\n\n' + text + '\n\n'
 
         final = final.strip()
         final += '\n'
