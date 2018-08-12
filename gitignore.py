@@ -5,7 +5,7 @@ import sublime
 import sublime_plugin
 
 
-class rungiboCommand(sublime_plugin.WindowCommand):
+class RungiboCommand(sublime_plugin.WindowCommand):
 
     _bp_list = []
     _bp_folder = 'boilerplates'
@@ -95,7 +95,7 @@ class rungiboCommand(sublime_plugin.WindowCommand):
         view.run_command('writegibo', {'bp': final})
 
 
-class writegiboCommand(sublime_plugin.TextCommand):
+class WritegiboCommand(sublime_plugin.TextCommand):
 
     def run(self, edit, **kwargs):
         self.view.insert(edit, 0, kwargs['bp'])
