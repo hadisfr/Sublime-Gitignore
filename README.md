@@ -42,7 +42,3 @@ git submodule update --init --recursive
 git clone https://github.com/kevinxucs/Sublime-Gitignore ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/Gitignore
 git submodule update --init --recursive
 ```
-
----
-
-The plugin is inspired by [gibo](https://github.com/simonwhitaker/gitignore-boilerplates) so thanks to Simon Whitaker.

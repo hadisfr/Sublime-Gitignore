@@ -69,7 +69,7 @@ class Loader():
         return self._load_file(self._bp_folder + '/' + self._address[bp])
 
 
-class RungiboCommand(sublime_plugin.WindowCommand):
+class RunCommand(sublime_plugin.WindowCommand):
     def show_quick_panel(self, options, done):
         # Fix from http://www.sublimetext.com/forum/viewtopic.php?f=6&t=10999
         sublime.set_timeout(lambda: self.window.show_quick_panel(options, done), 10)
@@ -101,10 +101,10 @@ class RungiboCommand(sublime_plugin.WindowCommand):
         final = final.strip()
         final += '\n'
         view = sublime.active_window().new_file()
-        view.run_command('writegibo', {'bp': final})
+        view.run_command('write', {'bp': final})
 
 
-class WritegiboCommand(sublime_plugin.TextCommand):
+class WriteCommand(sublime_plugin.TextCommand):
 
     def run(self, edit, **kwargs):
         self.view.insert(edit, 0, kwargs['bp'])
