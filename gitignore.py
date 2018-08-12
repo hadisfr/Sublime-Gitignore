@@ -100,3 +100,4 @@ class WritegiboCommand(sublime_plugin.TextCommand):
     def run(self, edit, **kwargs):
         self.view.insert(edit, 0, kwargs['bp'])
         self.view.set_name('.gitignore')
+        self.view.set_syntax_file('Packages/Git Formats/Git Ignore.sublime-syntax')
