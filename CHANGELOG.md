@@ -29,6 +29,6 @@ Start to work on `begin_edit` restriction on ST3
     * [Tasm.gitignore](boilerplates/Tasm.gitignore) has been removed by [github/gitignore#1189](https://github.com/github/gitignore/pull/1189)
     * [VB.Net.gitignore](VB.Net.gitignore) has been consolidate into [VisualStudio.gitignore](boilerplates/VisualStudio.gitignore) by [github/gitignore#492](https://github.com/github/gitignore/pull/492)
     * [vim.gitignore](boilerplates/vim.gitignore) has been renamed to [Vim.gitignore](boilerplates/Global/Vim.gitignore)
-    * [webMethods.gitignore](boilerplates/webMethods.gitignore) has been removed. I couldn't find any thing related to it's deletion.
+    * [webMethods.gitignore](boilerplates/webMethods.gitignore) has been removed in [github/gitignore@9f1b7d7](https://github.com/github/gitignore/commit/9f1b7d77e24ec9c3e2681da93b68767fd96dd52b) by [github/gitignore#1](https://github.com/dereknex/gitignore/pull/1)
 
     Some of those deleted files are available at [hadisfr/old-gitignores](https://github.com/hadisfr/old-gitignores).
