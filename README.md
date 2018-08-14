@@ -26,7 +26,7 @@ You can find some old gitignore boilerplates at [hadisfr/old-gitignores](https:/
 [Install Package Control](https://packagecontrol.io/installation),
 then press `Cmd + Shift + P` for Mac and `Ctrl + Shift + P` for Linux/Windows,
 select `Package Control: Install Package`,
-and select `Sublime-Gitignore`.
+and select `Gitignore`.
 
 ### Manual Install
 
