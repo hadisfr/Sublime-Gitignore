@@ -57,7 +57,7 @@ class Loader():
             # Dealing with .sublime-package file
             package = zipfile.ZipFile(self._package_path, 'r')
             with package.open(path, 'r') as f:
-                text = f.read()
+                text = f.read().decode()
         else:
             with open(file_path, 'r') as f:
                 text = f.read()
