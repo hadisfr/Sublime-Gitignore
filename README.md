@@ -33,14 +33,14 @@ and select `Sublime-Gitignore`.
 #### Linux
 
 ```bash
-git clone https://github.com/kevinxucs/Sublime-Gitignore ~/.config/sublime-text-2/Packages/Gitignore
+git clone https://github.com/kevinxucs/Sublime-Gitignore ~/.config/sublime-text-3/Packages/Gitignore
 git submodule update --init --recursive
 ```
 
 #### Windows
 
 ```bash
-git clone https://github.com/kevinxucs/Sublime-Gitignore %APPDATA%/Sublime\ Text\ 2/Packages/Gitignore
+git clone https://github.com/kevinxucs/Sublime-Gitignore %APPDATA%/Sublime\ Text\ 3/Packages/Gitignore
 git submodule update --init --recursive
 ```
 
@@ -48,6 +48,6 @@ git submodule update --init --recursive
 #### Mac
 
 ```bash
-git clone https://github.com/kevinxucs/Sublime-Gitignore ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/Gitignore
+git clone https://github.com/kevinxucs/Sublime-Gitignore ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/Gitignore
 git submodule update --init --recursive
 ```
