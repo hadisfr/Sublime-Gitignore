@@ -40,7 +40,7 @@ class Loader():
         if not user_file and self._is_zipfile:
             # Dealing with .sublime-package file
             package = zipfile.ZipFile(self._package_path, 'r')
-            path = self._bp_folder + '/'
+            path = self._bp_folder + os.sep
             return [file for file in package.namelist() if file.startswith(path) and file.endswith(GITIGNORE_EXT)]
         else:
             path = (os.path.join(sublime.packages_path(), self._user_gitignore_folder)
@@ -64,7 +64,7 @@ class Loader():
         return text
 
     def _get_key(self, bp_file):
-        return bp_file[bp_file.rfind('/') + 1:].replace(GITIGNORE_EXT, '')
+        return bp_file[bp_file.rfind(os.sep) + 1:].replace(GITIGNORE_EXT, '')
 
     def _build_list(self):
         for bp_file in self._list_dir():
@@ -122,4 +122,4 @@ class WriteCommand(sublime_plugin.TextCommand):
     def run(self, edit, **kwargs):
         self.view.insert(edit, 0, kwargs['bp'])
         self.view.set_name(GITIGNORE_EXT)
-        self.view.set_syntax_file('Packages/Git Formats/Git Ignore.sublime-syntax')
+        self.view.set_syntax_file(os.path.join('Packages', 'Git Formats', 'Git Ignore.sublime-syntax'))
