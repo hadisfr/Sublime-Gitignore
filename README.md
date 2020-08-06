@@ -48,3 +48,9 @@ git clone https://github.com/kevinxucs/Sublime-Gitignore %APPDATA%/Sublime\ Text
 ```bash
 git clone https://github.com/kevinxucs/Sublime-Gitignore ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/Gitignore
 ```
+
+#### Update Boilerplates
+
+```bash
+git subtree pull --prefix boilerplates/ https://github.com/github/gitignore.git master --squash
+```
